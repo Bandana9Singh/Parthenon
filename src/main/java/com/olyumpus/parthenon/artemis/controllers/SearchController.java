@@ -3,6 +3,7 @@ package com.olyumpus.parthenon.artemis.controllers;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +27,13 @@ public class SearchController {
 		return "Search is up and running";
 	}
 
+	@CrossOrigin(origins = "http://localhost:3000")
 	@GetMapping("/volumes")
 	public Volumes getResults (
 		@RequestParam Optional<String> q,
 		@RequestParam(required = false) Optional<String> langRestrict,
-		@RequestParam(required = false) Optional<String> maxResults,
+		@RequestParam(required = false, defaultValue = "10") Optional<Integer> maxResults,
+		@RequestParam(required = false, defaultValue = "0") Optional<Integer> startIndex,
 		@RequestParam(required = false) Optional<String> printType
 	) {
 		String searchEndPoint = config.getVolume();
@@ -39,6 +42,7 @@ public class SearchController {
 							.queryParamIfPresent("q", q)
 							.queryParamIfPresent("langRestrict", langRestrict)
 							.queryParamIfPresent("maxResults", maxResults)
+							.queryParamIfPresent("startIndex", startIndex)
 							.queryParamIfPresent("printType", printType)
 							.build();
 		
@@ -52,7 +56,10 @@ public class SearchController {
 						.retrieve()
 						.bodyToMono(Volumes.class)
 						.block();
-
-		return response;		
+		
+		maxResults.ifPresentOrElse((value) -> {response.setMaxResults(value);}, () -> {});
+		startIndex.ifPresentOrElse((value) -> {response.setStartIndex(value);}, () -> {});
+		
+		return response;
 	}
 }
