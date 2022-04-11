@@ -1,4 +1,4 @@
-package com.olyumpus.parthenon.artemis.beans.volume;
+package com.olympus.parthenon.artemis.beans.volume;
 
 public class Item {
 	private String id;

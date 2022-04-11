@@ -1,4 +1,4 @@
-package com.olyumpus.parthenon;
+package com.olympus.parthenon;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

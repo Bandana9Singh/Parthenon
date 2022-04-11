@@ -1,4 +1,4 @@
-package com.olyumpus.parthenon.artemis.controllers;
+package com.olympus.parthenon.artemis.controllers;
 
 import java.util.Optional;
 
@@ -12,8 +12,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.olyumpus.parthenon.artemis.beans.volume.Volumes;
-import com.olyumpus.parthenon.artemis.configs.YAMLConfig;
+import com.olympus.parthenon.artemis.beans.volume.Volumes;
+import com.olympus.parthenon.configs.YAMLConfig;
 
 @RestController
 @RequestMapping("/search")
