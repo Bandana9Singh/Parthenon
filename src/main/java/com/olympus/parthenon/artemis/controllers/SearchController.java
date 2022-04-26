@@ -1,8 +1,23 @@
 package com.olympus.parthenon.artemis.controllers;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
+import com.mongodb.client.model.Filters;
+import com.olympus.parthenon.artemis.models.Editions;
+import com.olympus.parthenon.artemis.repository.EditionsRepo;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +33,47 @@ import com.olympus.parthenon.configs.YAMLConfig;
 @RestController
 @RequestMapping("/search")
 public class SearchController {
-	
+
 	@Autowired
 	private YAMLConfig config;
-	
+
+	@Autowired
+	EditionsRepo editionsRepo;
+
 	@GetMapping("/serviceStatus")
 	public String getServiceStatus() {
 		return "Search is up and running";
+	}
+
+	@GetMapping("/editions")
+	public List<Editions> getEditions(
+			@RequestParam String title
+	) {
+		return editionsRepo.findSomething(title);
+	}
+
+	@GetMapping("/editions-limit")
+	public ResponseEntity<Map<String, Object>> getEditionsLimit(
+			@RequestParam String title,
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size
+	) {
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			Pageable pageable = PageRequest.of(page, size);
+			Page<Editions> editionPage = editionsRepo.findSomethingPaged(title, pageable);
+
+			response.put("data", editionPage.getContent());
+			response.put("totalResults", editionPage.getTotalElements());
+			response.put("totalPages", editionPage.getTotalPages());
+
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			response.clear();
+			response.put("message", e.getMessage());
+			return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	@CrossOrigin(origins = "http://localhost:3000")
@@ -45,21 +94,21 @@ public class SearchController {
 							.queryParamIfPresent("startIndex", startIndex)
 							.queryParamIfPresent("printType", printType)
 							.build();
-		
+
 		System.out.println(uriComponents.toUriString());
-		
+
 		WebClient webClient = WebClient.create();
-		
+
 		Volumes response = webClient
 						.get()
 						.uri(uriComponents.toUriString())
 						.retrieve()
 						.bodyToMono(Volumes.class)
 						.block();
-		
+
 		maxResults.ifPresentOrElse((value) -> {response.setMaxResults(value);}, () -> {});
 		startIndex.ifPresentOrElse((value) -> {response.setStartIndex(value);}, () -> {});
-		
+
 		return response;
 	}
 }

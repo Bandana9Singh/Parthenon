@@ -1,4 +1,11 @@
-google-books-api: 
+google-books-api:
   volume: https://www.googleapis.com/books/v1/volumes
 books:
   genre: Biography,Fiction,Historical Fiction,History,High Fantasy,Philosophy,Psychology,Romance,Tragedy,Mystery
+
+spring:
+    data:
+        mongodb:
+            host: localhost
+            port: 27017
+            database: gaia
