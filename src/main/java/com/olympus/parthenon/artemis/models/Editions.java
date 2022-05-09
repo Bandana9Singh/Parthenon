@@ -1,70 +1,43 @@
 package com.olympus.parthenon.artemis.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document("editions")
+@NoArgsConstructor
 public class Editions {
     @Id
+    @Getter
+    @Setter
     private String id;
 
+    @Getter
+    @Setter
     private String title;
 
     @Field(value = "number_of_pages")
+    @Getter
+    @Setter
     private int numberOfPages;
 
+    @Getter
+    @Setter
     private String subtitle;
 
     @Field(value = "publish_date")
+    @Getter
+    @Setter
     private String publishDate;
-
-    public Editions() {}
 
     public Editions(String title, int numberOfPages, String subtitle, String publishDate) {
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.subtitle = subtitle;
-        this.publishDate = publishDate;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public int getNumberOfPages() {
-        return numberOfPages;
-    }
-
-    public void setNumberOfPages(int numberOfPages) {
-        this.numberOfPages = numberOfPages;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public String getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(String publishDate) {
         this.publishDate = publishDate;
     }
 }

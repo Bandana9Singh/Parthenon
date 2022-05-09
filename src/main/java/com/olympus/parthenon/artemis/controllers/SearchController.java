@@ -64,7 +64,8 @@ public class SearchController {
 			Pageable pageable = PageRequest.of(page, size);
 			Page<Editions> editionPage = editionsRepo.findSomethingPaged(title, pageable);
 
-			response.put("data", editionPage.getContent());
+			List<Editions> list = editionPage.getContent();
+			response.put("data", list);
 			response.put("totalResults", editionPage.getTotalElements());
 			response.put("totalPages", editionPage.getTotalPages());
 
