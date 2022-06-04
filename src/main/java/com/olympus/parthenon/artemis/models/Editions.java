@@ -23,7 +23,7 @@ public class Editions {
     @Field(value = "number_of_pages")
     @Getter
     @Setter
-    private int numberOfPages;
+    private Integer numberOfPages;
 
     @Getter
     @Setter
@@ -34,7 +34,7 @@ public class Editions {
     @Setter
     private String publishDate;
 
-    public Editions(String title, int numberOfPages, String subtitle, String publishDate) {
+    public Editions(String title, Integer numberOfPages, String subtitle, String publishDate) {
         this.title = title;
         this.numberOfPages = numberOfPages;
         this.subtitle = subtitle;

@@ -1,4 +1,4 @@
-package com.olympus.parthenon.homer.controller;
+package com.olympus.parthenon.hermes.controller;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,4 +27,5 @@ public class BookController {
 		List<String> convertedGenreList = Arrays.asList(config.getGenre().split(","));
 		return convertedGenreList;
 	}
+	
 }

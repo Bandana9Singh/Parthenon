@@ -4,18 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Pattern;
 
-import com.mongodb.client.model.Filters;
-import com.olympus.parthenon.artemis.models.Editions;
-import com.olympus.parthenon.artemis.repository.EditionsRepo;
-import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,6 +21,8 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.olympus.parthenon.artemis.beans.volume.Volumes;
+import com.olympus.parthenon.artemis.models.Editions;
+import com.olympus.parthenon.artemis.repository.EditionsRepo;
 import com.olympus.parthenon.configs.YAMLConfig;
 
 @RestController
